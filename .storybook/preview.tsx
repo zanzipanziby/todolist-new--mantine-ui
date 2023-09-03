@@ -6,7 +6,7 @@ import { MantineProvider } from '@mantine/core'
 const preview: Preview = {
   decorators: [
     Story => (
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: 'dark' }}>
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: 'light' }}>
         <Story />
       </MantineProvider>
     ),
