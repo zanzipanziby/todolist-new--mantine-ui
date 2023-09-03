@@ -1,10 +1,16 @@
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/700.css'
 import type { Preview } from '@storybook/react'
-
-import '../src/styles/index.scss'
+import { Theme } from '@radix-ui/themes'
+import '@radix-ui/themes/styles.css'
+import '../src/index.scss'
 
 const preview: Preview = {
+  decorators: [
+    Story => (
+      <Theme appearance={'dark'}>
+        <Story />
+      </Theme>
+    ),
+  ],
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
