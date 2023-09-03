@@ -1,14 +1,14 @@
 import type { Preview } from '@storybook/react'
-import { Theme } from '@radix-ui/themes'
-import '@radix-ui/themes/styles.css'
+
 import '../src/index.scss'
+import { MantineProvider } from '@mantine/core'
 
 const preview: Preview = {
   decorators: [
     Story => (
-      <Theme appearance={'dark'}>
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: 'dark' }}>
         <Story />
-      </Theme>
+      </MantineProvider>
     ),
   ],
   parameters: {
