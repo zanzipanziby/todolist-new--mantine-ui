@@ -1,12 +1,14 @@
-export type AuthMeResponseType = {
+export type ResponseType<T> = {
   resultCode: number
   messages: string[]
-  data: {
-    id: number
-    email: string
-    login: string
-  }
+  data: T
 }
+
+export type AuthMeResponseType = ResponseType<{
+  id: number
+  email: string
+  login: string
+}>
 
 export type LoginRequestType = {
   email: string
@@ -15,16 +17,16 @@ export type LoginRequestType = {
   captcha?: boolean
 }
 
-export type LoginResponseType = {
-  resultCode: number
-  messages: string[]
-  data: {
-    userId: number
-  }
-}
+export type LoginResponseType = ResponseType<{ userId: number }>
 
-export type LogoutResponseType = {
-  resultCode: number
-  messages: string[]
-  data: {}
+export type LogoutResponseType = ResponseType<{}>
+
+export type TodolistServerResponseType = {
+  id: string
+  title: string
+  addedDate: string
+  order: number
 }
+export type AddTodolistResponseType = ResponseType<{ item: TodolistServerResponseType }>
+
+export type DeleteTodolistResponseType = ResponseType<{}>
