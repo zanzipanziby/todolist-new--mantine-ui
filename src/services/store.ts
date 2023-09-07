@@ -1,7 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { tasksReducer } from './reducers/tasks.reducer.ts'
+import { todolistsReducer } from './reducers/todolist.reducer.ts'
+
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    todolists: todolistsReducer,
+    tasks: tasksReducer,
+  },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

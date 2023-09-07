@@ -1,3 +1,5 @@
+import { Login } from '../../components/auth/login/login.tsx'
+
 export const LoginPage = () => {
-  return <div>Login</div>
+  return <Login onSubmit={() => {}} />
 }
