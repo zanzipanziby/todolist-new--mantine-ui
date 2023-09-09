@@ -20,8 +20,6 @@ const slice = createSlice({
   },
 })
 
-export const tasksReducer = slice.reducer
-
 const getTasks = createAsyncThunk(
   'tasks/getTasks',
   async (arg: { todolistId: string }, thunkAPI) => {
@@ -36,3 +34,9 @@ const getTasks = createAsyncThunk(
     }
   }
 )
+
+const tasksThunk = { getTasks }
+
+export const tasksActions = { ...tasksThunk }
+
+export const tasksReducer = slice.reducer

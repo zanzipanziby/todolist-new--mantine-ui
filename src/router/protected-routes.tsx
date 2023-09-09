@@ -1,4 +1,9 @@
+import { Navigate, Outlet } from 'react-router-dom'
+
+import { useAppSelector } from '../app/hooks.ts'
+
 export const ProtectedRoutes = () => {
-  //todo me запрос на сервер
-  return <div></div>
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+
+  return isLoggedIn ? <Outlet /> : <Navigate to={'login'} />
 }

@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3000",
     "build": "tsc && vite build",
     "format": "prettier --write src",
     "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build"
   },
   "dependencies": {

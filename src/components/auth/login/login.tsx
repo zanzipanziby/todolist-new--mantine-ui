@@ -39,10 +39,7 @@ export const Login = ({ onSubmit = () => {} }: LoginPropsType) => {
 
   const onSubmitHandler: SubmitHandler<FormInput> = data => {
     onSubmit(data)
-    console.log(data)
   }
-
-  console.log(errors)
 
   return (
     <Paper maw={'350px'} withBorder p={40}>

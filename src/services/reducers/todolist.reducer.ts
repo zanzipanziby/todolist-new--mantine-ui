@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { todolistAPI } from '../api/todolist.api.ts'
 import { TodolistServerResponseType } from '../api/types.ts'
 
+import { tasksActions } from './tasks.reducer.ts'
+
 const slice = createSlice({
   initialState: [] as TodolistServerResponseType[],
   name: 'todolists',
@@ -15,10 +17,16 @@ const slice = createSlice({
 })
 
 const getTodolists = createAsyncThunk('todolists/getTodolists', async (_, thunkAPI) => {
-  const { rejectWithValue } = thunkAPI
+  const { dispatch, rejectWithValue } = thunkAPI
 
   try {
     const res = await todolistAPI.getTodolists()
+
+    if (res.data.length > 0) {
+      res.data.forEach(t => {
+        dispatch(tasksActions.getTasks({ todolistId: t.id }))
+      })
+    }
 
     return { todolists: res.data }
   } catch (error) {

@@ -1,4 +1,4 @@
-import { Button, Flex, Header, Title } from '@mantine/core'
+import { Button, Container, Flex, Header, Title } from '@mantine/core'
 
 type HeaderComponentPropsType = {
   isLoggedIn: boolean
@@ -7,10 +7,12 @@ type HeaderComponentPropsType = {
 export const HeaderComponent = ({ isLoggedIn }: HeaderComponentPropsType) => {
   return (
     <Header height={60} mb={120} bg={'blue'} p={20}>
-      <Flex h={'100%'} align={'center'} justify={'space-between'}>
-        <Title>Todolist</Title>
-        {isLoggedIn && <Button variant={'light'}>Logout</Button>}
-      </Flex>
+      <Container h={'100%'} size={'lg'}>
+        <Flex h={'100%'} align={'center'} justify={'space-between'}>
+          <Title c={'white'}>Todolist</Title>
+          {isLoggedIn && <Button variant={'light'}>Logout</Button>}
+        </Flex>
+      </Container>
     </Header>
   )
 }
