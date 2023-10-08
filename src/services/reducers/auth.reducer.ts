@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { authAPI } from '../api/auth.api.ts'
+import { errorResponseProcessing } from '../utils/error-response-processing.ts'
 
 const initialState = {
   isLoggedIn: false,
@@ -12,7 +13,6 @@ const slice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(authMe.fulfilled, state => {
-      debugger
       state.isLoggedIn = true
     })
   },
@@ -21,10 +21,10 @@ const slice = createSlice({
 const authMe = createAsyncThunk('auth/me', async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI
 
-  debugger
-
   try {
-    return await authAPI.me()
+    const res = await authAPI.me()
+
+    return errorResponseProcessing(res, rejectWithValue)
   } catch (error) {
     return rejectWithValue(error)
   }
