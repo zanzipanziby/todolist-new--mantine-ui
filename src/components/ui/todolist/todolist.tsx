@@ -1,18 +1,31 @@
 import { Flex, Paper, Title } from '@mantine/core'
 
-import { TaskServerResponseType, TaskStatuses } from '../../../services/api/types.ts'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts'
+import { TaskStatuses } from '../../../services/api/types.ts'
+import { tasksActions } from '../../../services/reducers/tasks.reducer.ts'
 import { AddItem } from '../add-item'
 import { ButtonGroupComponent } from '../button-group'
 import { Task } from '../task'
 
 type TodolistPropsType = {
+  todolistId: string
   title: string
-  tasks: TaskServerResponseType[]
 }
 
-export const Todolist = ({ title, tasks }: TodolistPropsType) => {
+export const Todolist = ({ title, todolistId }: TodolistPropsType) => {
+  const tasks = useAppSelector(state => state.tasks[todolistId])
+  const dispatch = useAppDispatch()
+  const removeTask = (taskId: string) => {
+    dispatch(tasksActions.removeTask({ todolistId, taskId }))
+  }
+
   const tasksRender = tasks.map(el => (
-    <Task key={el.id} title={el.title} isDone={el.status === TaskStatuses.Completed} />
+    <Task
+      key={el.id}
+      title={el.title}
+      isDone={el.status === TaskStatuses.Completed}
+      remove={() => removeTask(el.id)}
+    />
   ))
 
   return (

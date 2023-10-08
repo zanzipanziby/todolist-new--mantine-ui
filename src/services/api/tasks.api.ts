@@ -1,5 +1,5 @@
 import { instance } from './instance.ts'
-import { getTasksResponseType } from './types.ts'
+import { getTasksResponseType, ResponseType } from './types.ts'
 
 export const tasksAPI = {
   getTasks(todolistId: string, params?: { count?: number; page?: number }) {
@@ -8,5 +8,8 @@ export const tasksAPI = {
     }
 
     return instance.get<getTasksResponseType>(`todo-lists/${todolistId}/tasks`, { params: params })
+  },
+  removeTask(todolistId: string, taskId: string) {
+    return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
   },
 }

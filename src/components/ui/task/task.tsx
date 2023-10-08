@@ -4,9 +4,10 @@ import { IconTrashFilled } from '@tabler/icons-react'
 type TaskPropsType = {
   title: string
   isDone: boolean
+  remove: () => void
 }
 
-export const Task = ({ title, isDone }: TaskPropsType) => {
+export const Task = ({ title, isDone, remove }: TaskPropsType) => {
   return (
     <li>
       <Flex justify={'space-between'} align={'center'}>
@@ -14,7 +15,7 @@ export const Task = ({ title, isDone }: TaskPropsType) => {
           <Checkbox checked={isDone} />
           <Text color={isDone ? 'gray' : ''}>{title}</Text>
         </Flex>
-        <ActionIcon>
+        <ActionIcon onClick={remove}>
           <IconTrashFilled />
         </ActionIcon>
       </Flex>
