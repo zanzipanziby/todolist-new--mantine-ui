@@ -1,8 +1,6 @@
 import { Flex, Paper, Title } from '@mantine/core'
 
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts'
-import { TaskStatuses } from '../../../services/api/types.ts'
-import { tasksActions } from '../../../services/reducers/tasks.reducer.ts'
+import { TaskServerResponseType, TaskStatuses } from '../../../services/api/types.ts'
 import { AddItem } from '../add-item'
 import { ButtonGroupComponent } from '../button-group'
 import { Task } from '../task'
@@ -10,13 +8,17 @@ import { Task } from '../task'
 type TodolistPropsType = {
   todolistId: string
   title: string
+  tasks: TaskServerResponseType[]
+  removeTask: (arg: { todolistId: string; taskId: string }) => void
+  addTask: (arg: { todolistId: string; title: string }) => void
 }
 
-export const Todolist = ({ title, todolistId }: TodolistPropsType) => {
-  const tasks = useAppSelector(state => state.tasks[todolistId])
-  const dispatch = useAppDispatch()
-  const removeTask = (taskId: string) => {
-    dispatch(tasksActions.removeTask({ todolistId, taskId }))
+export const Todolist = ({ title, todolistId, tasks, removeTask, addTask }: TodolistPropsType) => {
+  const removeTaskHandle = (taskId: string) => {
+    removeTask({ todolistId, taskId })
+  }
+  const addTaskHandle = (title: string) => {
+    addTask({ todolistId, title })
   }
 
   const tasksRender = tasks.map(el => (
@@ -24,7 +26,7 @@ export const Todolist = ({ title, todolistId }: TodolistPropsType) => {
       key={el.id}
       title={el.title}
       isDone={el.status === TaskStatuses.Completed}
-      remove={() => removeTask(el.id)}
+      remove={() => removeTaskHandle(el.id)}
     />
   ))
 
@@ -34,7 +36,7 @@ export const Todolist = ({ title, todolistId }: TodolistPropsType) => {
         <Title ta={'center'} order={2}>
           {title}
         </Title>
-        <AddItem placeholder={'New task'} onClick={() => {}} fullWidth />
+        <AddItem placeholder={'New task'} callback={addTaskHandle} fullWidth />
         <ul>{tasksRender}</ul>
         <Flex justify={'center'}>
           <ButtonGroupComponent filterValue={'all'} callback={() => {}} />

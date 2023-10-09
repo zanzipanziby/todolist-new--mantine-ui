@@ -23,6 +23,11 @@ const slice = createSlice({
           el => el.id !== action.payload.arg.taskId
         )
       })
+      .addCase(addTask.fulfilled, (state, action) => {
+        if ('data' in action.payload.res) {
+          state[action.payload.arg.todolistId].unshift(action.payload.res.data.data.item)
+        }
+      })
   },
 })
 
@@ -56,7 +61,22 @@ const removeTask = createAsyncThunk(
   }
 )
 
-const tasksThunk = { getTasks, removeTask }
+const addTask = createAsyncThunk(
+  'tasks/addTask',
+  async (arg: { todolistId: string; title: string }, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI
+
+    try {
+      const res = await tasksAPI.addTask(arg.todolistId, arg.title)
+
+      return { res: errorResponseProcessing(res, rejectWithValue), arg }
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
+const tasksThunk = { getTasks, removeTask, addTask }
 
 export const tasksActions = { ...tasksThunk }
 
